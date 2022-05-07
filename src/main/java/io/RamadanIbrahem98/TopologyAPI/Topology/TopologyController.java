@@ -61,9 +61,10 @@ public class TopologyController {
 
   @DeleteMapping("/{topologyID}")
   public String deleteJSON(@PathVariable String topologyID) {
-    if (topologyService.deleteTopology(topologyID)) {
+    try {
+      topologyService.deleteTopology(topologyID);
       return "Topology with id: " + topologyID + " deleted successfully";
-    } else {
+    } catch (NoSuchElementException ex) {
       return "Topology with id: " + topologyID + " not found";
     }
   }
