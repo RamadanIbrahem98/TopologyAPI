@@ -116,20 +116,26 @@ public class TopologyService {
     return map;
   }
 
-  public ArrayList<Map<?, ?>> queryDevicesWithNetListNode(String topologyID, String netListNode) {
+  public ArrayList<Map<?, ?>> queryDevicesWithNetListNode(String topologyID, String netListNode) throws NoSuchElementException {
     ArrayList<Map<?, ?>> devices = new ArrayList<>();
+    boolean foundTopology = false;
     Type type = new TypeToken<Map<?, ?>>() {
     }.getType();
 
     for (Topology topology : topologyList) {
       if (topology.getId().equals(topologyID)) {
+        foundTopology = true;
         for (Component component : topology.getComponents()) {
           if (component.getNetList().containsValue(netListNode)) {
             Map<?, ?> map = new Gson().fromJson(component.toString(), type);
             devices.add(map);
           }
         }
+        break;
       }
+    }
+    if (!foundTopology) {
+      throw new NoSuchElementException("No topology with id = " + topologyID);
     }
     return devices;
   }
