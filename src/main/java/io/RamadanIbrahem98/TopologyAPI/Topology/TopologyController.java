@@ -42,7 +42,7 @@ public class TopologyController {
     }
   }
 
-  @GetMapping("/{topologyID}/write")
+  @GetMapping("/write/{topologyID}")
   public String writeJSON(@PathVariable String topologyID) {
     try {
       topologyService.writeJson(topologyID);
