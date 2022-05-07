@@ -55,8 +55,8 @@ public class TopologyController {
   }
 
   @GetMapping("/{topologyID}/netlist/{netListNode}")
-  public ArrayList<Map<?, ?>> getDevicesWithNetlistNode(@PathVariable String topologyID, @PathVariable String netListNode) {
-    return topologyService.queryDevicesWithNetlistNode(topologyID, netListNode);
+  public ArrayList<Map<?, ?>> getDevicesWithNetListNode(@PathVariable String topologyID, @PathVariable String netListNode) {
+    return topologyService.queryDevicesWithNetListNode(topologyID, netListNode);
   }
 
   @DeleteMapping("/{topologyID}")

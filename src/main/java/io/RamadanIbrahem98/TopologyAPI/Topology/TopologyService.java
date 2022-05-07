@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class TopologyService {
@@ -121,8 +120,9 @@ public class TopologyService {
     }
   }
 
+  @SuppressWarnings("unchecked")
   private Topology getTopologyByJson(Map<?, ?> json) {
-    Topology topology = null;
+    Topology topology;
     ArrayList<Component> components = new ArrayList<>();
     String topologyID = (String) json.get("id");
     String componentName = "";
@@ -132,19 +132,18 @@ public class TopologyService {
 
     for (Map<?, ?> component : (ArrayList<Map<?, ?>>) json.get("components")) {
       HashMap<String, String> deviceNetList = new HashMap<>();
-      HashMap<String, String> deviceSpecs = new HashMap<>();
 
       for (Object key : component.keySet()) {
         if (!(key.equals("id") || key.equals("type"))) {
           if (key.equals("netlist")) {
-            for (Object netlistKey : ((Map<?, ?>) component.get(key)).keySet()) {
-              deviceNetList.put((String) netlistKey, (String) ((Map<?, ?>) component.get(key)).get(netlistKey));
+            for (Object netListKey : ((Map<?, ?>) component.get(key)).keySet()) {
+              deviceNetList.put((String) netListKey, (String) ((Map<?, ?>) component.get(key)).get(netListKey));
             }
           } else {
             componentName = (String) key;
-            min = (double) (((Map<String, Double>) component.get(key)).get("min"));
-            max = (double) (((Map<String, Double>) component.get(key)).get("max"));
-            defaultValue = (double) (((Map<String, Double>) component.get(key)).get("default"));
+            min = ((Map<String, Double>) component.get(key)).get("min");
+            max = ((Map<String, Double>) component.get(key)).get("max");
+            defaultValue = ((Map<String, Double>) component.get(key)).get("default");
           }
         }
       }
@@ -184,7 +183,7 @@ public class TopologyService {
     return map;
   }
 
-  public ArrayList<Map<?, ?>> queryDevicesWithNetlistNode(String topologyID, String netListNode) {
+  public ArrayList<Map<?, ?>> queryDevicesWithNetListNode(String topologyID, String netListNode) {
     ArrayList<Map<?, ?>> devices = new ArrayList<>();
     Type type = new TypeToken<Map<?, ?>>() {
     }.getType();

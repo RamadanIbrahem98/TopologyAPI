@@ -13,9 +13,10 @@ public class Component {
   ) {
     this.id = id;
     this.type = type;
-    netList = new HashMap<String, String>();
+    netList = new HashMap<>();
   }
 
+  @SuppressWarnings("unused")
   public Component(final String id,
                    final String type,
                    final String name,
@@ -25,7 +26,7 @@ public class Component {
   ) {
     this.id = id;
     this.type = type;
-    netList = new HashMap<String, String>();
+    netList = new HashMap<>();
     deviceSpecs = new Specs(name, defaultValue, min, max);
   }
 
@@ -38,6 +39,7 @@ public class Component {
     this.netList = netList;
   }
 
+  @SuppressWarnings("unused")
   public Component(final String id,
                    final String type,
                    final HashMap<String, String> netList,
@@ -66,10 +68,6 @@ public class Component {
 
   public void addNetList(final String netName, final String netValue) {
     netList.put(netName, netValue);
-  }
-
-  public Specs getDeviceSpecs() {
-    return deviceSpecs;
   }
 
   public void setDeviceSpecs(final Specs deviceSpecs) {

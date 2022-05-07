@@ -3,6 +3,7 @@ package io.RamadanIbrahem98.TopologyAPI.Component;
 import java.util.HashMap;
 
 public class Resistor extends Component{
+  @SuppressWarnings("unused")
   public Resistor(final String id,
                   final String name,
                   final double defaultValue,

@@ -3,6 +3,7 @@ package io.RamadanIbrahem98.TopologyAPI.Component;
 import java.util.HashMap;
 
 public class Transistor extends Component{
+  @SuppressWarnings("unused")
   public Transistor(final String id,
                     final String name,
                     final double defaultValue,
