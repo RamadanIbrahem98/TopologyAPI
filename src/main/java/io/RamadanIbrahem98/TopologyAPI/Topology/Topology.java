@@ -49,4 +49,21 @@ public class Topology {
             ", \"components\"=" + components +
             '}';
   }
+
+  /**
+   * Override for the equals method.
+   *
+   * @param o the object to be compared against
+   * @return true if the objects are equal, false otherwise
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Topology topology = (Topology) o;
+
+    if (!id.equals(topology.id)) return false;
+    return components.equals(topology.components);
+  }
 }

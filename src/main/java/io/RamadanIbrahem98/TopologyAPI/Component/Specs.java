@@ -70,4 +70,22 @@ public class Specs {
             ", \"max\"=" + max +
             '}';
   }
+
+  /**
+   * Override the equals method of the Object class.
+   *
+   * @param o the object to be compared against
+   * @return true if the object is equal to the spec, false otherwise
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Specs specs = (Specs) o;
+
+    if (Double.compare(specs.defaultValue, defaultValue) != 0) return false;
+    if (Double.compare(specs.min, min) != 0) return false;
+    return Double.compare(specs.max, max) == 0;
+  }
 }

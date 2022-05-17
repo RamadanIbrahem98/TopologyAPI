@@ -149,4 +149,23 @@ public class Component {
             ", netlist=" + getNetList() +
             '}';
   }
+
+  /**
+   * Override the equals method of the Object class.
+   *
+   * @param o the object to be compared against
+   * @return true if the object is equal to the component, false otherwise
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Component component = (Component) o;
+
+    if (!id.equals(component.id)) return false;
+    if (!type.equals(component.type)) return false;
+    if (!netList.equals(component.netList)) return false;
+    return deviceSpecs.equals(component.deviceSpecs);
+  }
 }
