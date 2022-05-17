@@ -5,6 +5,8 @@ import com.google.gson.reflect.TypeToken;
 import io.RamadanIbrahem98.TopologyAPI.Component.Component;
 import io.RamadanIbrahem98.TopologyAPI.Component.Resistor;
 import io.RamadanIbrahem98.TopologyAPI.Component.Transistor;
+import io.RamadanIbrahem98.TopologyAPI.Exception.BadRequestException;
+import io.RamadanIbrahem98.TopologyAPI.Exception.InternalServerError;
 import io.RamadanIbrahem98.TopologyAPI.Exception.TopologyNotFoundException;
 import io.RamadanIbrahem98.TopologyAPI.IO.JsonIO;
 import io.RamadanIbrahem98.TopologyAPI.IO.TopologyIO;
@@ -97,20 +99,36 @@ public class TopologyService {
     return null;
   }
 
-  public void writeJson(String topologyID) throws IOException, TopologyNotFoundException {
+  public void writeJson(String topologyID) throws TopologyNotFoundException, InternalServerError {
     Topology topology = getTopologyByIdOrNull(topologyID);
 
-    if (topology != null) {
-      JsonIO.writeJson(topologyID + ".json", topology);
-    } else {
+    if (topology == null) {
       throw new TopologyNotFoundException("No topology with id = " + topologyID);
+    }
+
+    try {
+      JsonIO.writeJson(topologyID + ".json", topology);
+    } catch (IOException e) {
+      throw new InternalServerError("Failed to write json file");
     }
   }
 
-  public Map<?, ?> readJson(String fileName) throws IOException {
-    Map<?, ?> map = JsonIO.readJson(fileName);
+  public Map<?, ?> readJson(String fileName) throws BadRequestException, InternalServerError {
+    Map<?, ?> map;
+    try {
+      map = JsonIO.readJson(fileName);
+    } catch (IOException e) {
+      throw new InternalServerError("Failed to read json file");
+    }
 
     Topology topology = TopologyIO.getTopologyByJson(map);
+
+    for (Topology top : topologyList) {
+      if (top.getId().equals(topology.getId())) {
+        throw new BadRequestException("Topology with id = " + topology.getId() + " already exists");
+      }
+    }
+
     topologyList.add(topology);
 
     return map;

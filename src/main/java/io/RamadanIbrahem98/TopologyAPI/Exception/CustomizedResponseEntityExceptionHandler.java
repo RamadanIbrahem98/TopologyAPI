@@ -20,7 +20,14 @@ public class CustomizedResponseEntityExceptionHandler {
   @ExceptionHandler(BadRequestException.class)
   public final ResponseEntity<ExceptionResponse> badRequestException(BadRequestException ex, WebRequest request) {
     ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
-            request.getDescription(false), HttpStatus.NOT_ACCEPTABLE.getReasonPhrase());
-    return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_ACCEPTABLE);
+            request.getDescription(false), HttpStatus.BAD_REQUEST.getReasonPhrase());
+    return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(InternalServerError.class)
+  public final ResponseEntity<ExceptionResponse> internalServerErrorException(InternalServerError ex, WebRequest request) {
+    ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+            request.getDescription(false), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
+    return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
