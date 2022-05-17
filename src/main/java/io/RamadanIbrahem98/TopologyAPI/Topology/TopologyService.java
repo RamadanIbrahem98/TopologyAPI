@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import io.RamadanIbrahem98.TopologyAPI.Component.Component;
 import io.RamadanIbrahem98.TopologyAPI.Component.Resistor;
 import io.RamadanIbrahem98.TopologyAPI.Component.Transistor;
+import io.RamadanIbrahem98.TopologyAPI.Exception.TopologyNotFoundException;
 import io.RamadanIbrahem98.TopologyAPI.IO.JsonIO;
 import io.RamadanIbrahem98.TopologyAPI.IO.TopologyIO;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 @Service
 public class TopologyService {
@@ -78,14 +78,14 @@ public class TopologyService {
     return devices;
   }
 
-  public boolean deleteTopology(String topologyID) throws NoSuchElementException {
+  public boolean deleteTopology(String topologyID) throws TopologyNotFoundException {
     for (Topology topology : topologyList) {
       if (topology.getId().equals(topologyID)) {
         topologyList.remove(topology);
         return true;
       }
     }
-    throw new NoSuchElementException("No topology with id = " + topologyID);
+    throw new TopologyNotFoundException("No topology with id = " + topologyID);
   }
 
   private Topology getTopologyByIdOrNull(String topologyID) {
@@ -97,13 +97,13 @@ public class TopologyService {
     return null;
   }
 
-  public void writeJson(String topologyID) throws IOException, NoSuchElementException {
+  public void writeJson(String topologyID) throws IOException, TopologyNotFoundException {
     Topology topology = getTopologyByIdOrNull(topologyID);
 
     if (topology != null) {
       JsonIO.writeJson(topologyID + ".json", topology);
     } else {
-      throw new NoSuchElementException("No topology with id = " + topologyID);
+      throw new TopologyNotFoundException("No topology with id = " + topologyID);
     }
   }
 
@@ -116,7 +116,7 @@ public class TopologyService {
     return map;
   }
 
-  public ArrayList<Map<?, ?>> queryDevicesWithNetListNode(String topologyID, String netListNode) throws NoSuchElementException {
+  public ArrayList<Map<?, ?>> queryDevicesWithNetListNode(String topologyID, String netListNode) throws TopologyNotFoundException {
     ArrayList<Map<?, ?>> devices = new ArrayList<>();
     boolean foundTopology = false;
     Type type = new TypeToken<Map<?, ?>>() {
@@ -135,7 +135,7 @@ public class TopologyService {
       }
     }
     if (!foundTopology) {
-      throw new NoSuchElementException("No topology with id = " + topologyID);
+      throw new TopologyNotFoundException("No topology with id = " + topologyID);
     }
     return devices;
   }
