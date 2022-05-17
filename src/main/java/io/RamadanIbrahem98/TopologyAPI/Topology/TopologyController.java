@@ -19,7 +19,7 @@ public class TopologyController {
   }
 
   @GetMapping
-  public ArrayList<Map<?, ?>> getTopologies() {
+  public ArrayList<Topology> getTopologies() {
     return topologyService.getTopologies();
   }
 
@@ -40,7 +40,7 @@ public class TopologyController {
   }
 
   @GetMapping("/{topologyID}/netlist/{netListNode}")
-  public ArrayList<Map<?, ?>> getDevicesWithNetListNode(@PathVariable String topologyID, @PathVariable String netListNode) {
+  public ArrayList<Component> getDevicesWithNetListNode(@PathVariable String topologyID, @PathVariable String netListNode) {
     return topologyService.queryDevicesWithNetListNode(topologyID, netListNode);
   }
 

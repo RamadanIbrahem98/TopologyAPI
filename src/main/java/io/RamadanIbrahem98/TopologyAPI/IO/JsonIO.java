@@ -21,7 +21,7 @@ public class JsonIO {
    * @return a Map object representing the JSON file
    * @throws IOException if there was an error reading from disk
    */
-  public static Map<?, ?> readJson(String fileName) throws IOException {
+  public Map<?, ?> readJson(String fileName) throws IOException {
     Map<?, ?> map;
     try {
       Gson gson = new Gson();
@@ -43,7 +43,7 @@ public class JsonIO {
    * @param fileName the name of the file to read from disk
    * @throws IOException if there was an error reading from disk
    */
-  public static Map<?, ?> readJson(String filePath, String fileName) throws IOException {
+  public Map<?, ?> readJson(String filePath, String fileName) throws IOException {
     Map<?, ?> map;
     try {
       Gson gson = new Gson();
@@ -65,7 +65,7 @@ public class JsonIO {
    * @param o        the object to write to disk
    * @throws IOException if there was an error writing to disk
    */
-  public static void writeJson(String fileName, Object o) throws IOException {
+  public void writeJson(String fileName, Object o) throws IOException {
     JsonObject convertedObject = new Gson().fromJson(o.toString(), JsonObject.class);
     try {
       Writer writer = new FileWriter(fileName);
