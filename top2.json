@@ -1,0 +1,32 @@
+{
+  "id": "top2",
+  "components": [
+    {
+      "id": "res2",
+      "type": "resistor",
+      "resistance": {
+        "default": 100.0,
+        "min": 20.0,
+        "max": 2000.0
+      },
+      "netlist": {
+        "t1": "vcc",
+        "t2": "gnd"
+      }
+    },
+    {
+      "id": "t1",
+      "type": "transistor",
+      "m(l)": {
+        "default": 3.0,
+        "min": 1.5,
+        "max": 5.0
+      },
+      "netlist": {
+        "gate": "vin",
+        "source": "vss",
+        "drain": "n2"
+      }
+    }
+  ]
+}
