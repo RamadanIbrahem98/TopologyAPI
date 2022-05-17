@@ -18,7 +18,7 @@ public class TopologyIO {
    * @return the topology object
    */
   @SuppressWarnings("unchecked")
-  public static Topology getTopologyByJson(Map<?, ?> json) {
+  public Topology getTopologyByJson(Map<?, ?> json) {
     Topology topology;
     ArrayList<Component> components = new ArrayList<>();
     String topologyID = (String) json.get("id");
