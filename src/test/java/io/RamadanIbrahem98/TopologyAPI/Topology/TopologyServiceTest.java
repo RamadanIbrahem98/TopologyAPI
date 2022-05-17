@@ -2,7 +2,7 @@ package io.RamadanIbrahem98.TopologyAPI.Topology;
 
 import io.RamadanIbrahem98.TopologyAPI.Component.Component;
 import io.RamadanIbrahem98.TopologyAPI.Component.Resistor;
-import io.RamadanIbrahem98.TopologyAPI.Exception.TopologyNotFoundException;
+import io.RamadanIbrahem98.TopologyAPI.Exception.BadRequestException;
 import io.RamadanIbrahem98.TopologyAPI.IO.JsonIO;
 import io.RamadanIbrahem98.TopologyAPI.IO.TopologyIO;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,7 +51,7 @@ class TopologyServiceTest {
     String topologyID = "top1";
     Throwable throwable = catchThrowable(() -> underTest.queryDevices(topologyID));
 
-    assertThat(throwable).isInstanceOf(TopologyNotFoundException.class).hasMessageContaining("Topology with id = " + topologyID + " not found");
+    assertThat(throwable).isInstanceOf(BadRequestException.class).hasMessageContaining("Topology with id = " + topologyID + " not found");
   }
 
   @Test
@@ -72,7 +72,7 @@ class TopologyServiceTest {
 
     Throwable throwable = catchThrowable(() -> underTest.deleteTopology(topologyID));
 
-    assertThat(throwable).isInstanceOf(TopologyNotFoundException.class).hasMessageContaining("No topology with id = " + topologyID);
+    assertThat(throwable).isInstanceOf(BadRequestException.class).hasMessageContaining("No topology with id = " + topologyID);
   }
 
   @Test
@@ -111,7 +111,7 @@ class TopologyServiceTest {
   void queryDevicesWithNetListNodeShouldThrowTopologyNotFound() {
     String topologyID = "top1";
     Throwable throwable = catchThrowable(() -> underTest.queryDevicesWithNetListNode(topologyID, "node1"));
-    assertThat(throwable).isInstanceOf(TopologyNotFoundException.class).hasMessageContaining("No topology with id = " + topologyID);
+    assertThat(throwable).isInstanceOf(BadRequestException.class).hasMessageContaining("No topology with id = " + topologyID);
   }
 
   @Test

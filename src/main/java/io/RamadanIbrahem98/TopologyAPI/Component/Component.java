@@ -117,6 +117,9 @@ public class Component {
 
   /**
    * Append a new netlist entry to the netlist of the component.
+   *
+   * @param netName  the name of the netlist node
+   * @param netValue the value of the netlist node
    */
   public void addNetList(final String netName, final String netValue) {
     netList.put(netName, netValue);

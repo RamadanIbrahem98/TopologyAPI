@@ -41,6 +41,7 @@ public class JsonIO {
    *
    * @param filePath the path to the file to read from disk
    * @param fileName the name of the file to read from disk
+   * @return a Map object representing the JSON file
    * @throws IOException if there was an error reading from disk
    */
   public Map<?, ?> readJson(String filePath, String fileName) throws IOException {

@@ -3,7 +3,6 @@ package io.RamadanIbrahem98.TopologyAPI.Topology;
 import io.RamadanIbrahem98.TopologyAPI.Component.Component;
 import io.RamadanIbrahem98.TopologyAPI.Exception.BadRequestException;
 import io.RamadanIbrahem98.TopologyAPI.Exception.InternalServerError;
-import io.RamadanIbrahem98.TopologyAPI.Exception.TopologyNotFoundException;
 import io.RamadanIbrahem98.TopologyAPI.IO.JsonIO;
 import io.RamadanIbrahem98.TopologyAPI.IO.TopologyIO;
 import org.springframework.stereotype.Service;
@@ -48,12 +47,12 @@ public class TopologyService {
    *
    * @param topologyID Topology id
    * @return A list of all the components in the topology
-   * @throws TopologyNotFoundException if topology id is not found in memory
+   * @throws BadRequestException if topology id is not found in memory
    */
   public ArrayList<Component> queryDevices(String topologyID) {
     Topology topology = getTopologyByIdOrNull(topologyID);
     if (topology == null) {
-      throw new TopologyNotFoundException("Topology with id = " + topologyID + " not found");
+      throw new BadRequestException("Topology with id = " + topologyID + " not found");
     }
 
     return topology.getComponents();
@@ -63,17 +62,17 @@ public class TopologyService {
    * Delete a topology from memory by id.
    *
    * @param topologyID Topology id
-   * @return true if topology is deleted, or else throws TopologyNotFoundException
-   * @throws TopologyNotFoundException if topology id is not found in memory
+   * @return true if topology is deleted, or else throws BadRequestException
+   * @throws BadRequestException if topology id is not found in memory
    */
-  public boolean deleteTopology(String topologyID) throws TopologyNotFoundException {
+  public boolean deleteTopology(String topologyID) throws BadRequestException {
     for (Topology topology : topologyList) {
       if (topology.getId().equals(topologyID)) {
         topologyList.remove(topology);
         return true;
       }
     }
-    throw new TopologyNotFoundException("No topology with id = " + topologyID);
+    throw new BadRequestException("No topology with id = " + topologyID);
   }
 
   /**
@@ -99,14 +98,14 @@ public class TopologyService {
    * Save a topology from memory to a file on disk.
    *
    * @param topologyID Topology id
-   * @throws TopologyNotFoundException if topology id is not found in memory
-   * @throws InternalServerError       if there was an error during writing to file
+   * @throws BadRequestException if topology id is not found in memory
+   * @throws InternalServerError if there was an error during writing to file
    */
-  public void writeJson(String topologyID) throws TopologyNotFoundException, InternalServerError {
+  public void writeJson(String topologyID) throws BadRequestException, InternalServerError {
     Topology topology = getTopologyByIdOrNull(topologyID);
 
     if (topology == null) {
-      throw new TopologyNotFoundException("No topology with id = " + topologyID);
+      throw new BadRequestException("No topology with id = " + topologyID);
     }
 
     try {
@@ -153,16 +152,16 @@ public class TopologyService {
    * @param topologyID  Topology id
    * @param netListNode Netlist node
    * @return A list of all the components connected to that netlist node
-   * @throws TopologyNotFoundException if topology id is not found in memory
+   * @throws BadRequestException if topology id is not found in memory
    */
-  public ArrayList<Component> queryDevicesWithNetListNode(String topologyID, String netListNode) throws TopologyNotFoundException {
+  public ArrayList<Component> queryDevicesWithNetListNode(String topologyID, String netListNode) throws BadRequestException {
     ArrayList<Component> devices = new ArrayList<>();
     boolean foundTopology = false;
 
     Topology topology = getTopologyByIdOrNull(topologyID);
 
     if (topology == null) {
-      throw new TopologyNotFoundException("Topology with id = " + topologyID + " not found");
+      throw new BadRequestException("Topology with id = " + topologyID + " not found");
     }
 
     for (Component component : topology.getComponents()) {
