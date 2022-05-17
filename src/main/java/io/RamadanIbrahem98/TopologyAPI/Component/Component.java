@@ -8,6 +8,12 @@ public class Component {
   private final HashMap<String, String> netList;
   private Specs deviceSpecs;
 
+  /**
+   * Constructor for Component class.
+   *
+   * @param id   the id of the component
+   * @param type the type of the component
+   */
   public Component(final String id,
                    final String type
   ) {
@@ -16,6 +22,16 @@ public class Component {
     netList = new HashMap<>();
   }
 
+  /**
+   * Constructor for Component class.
+   *
+   * @param id           the id of the component
+   * @param type         the type of the component
+   * @param name         the name of the specification of the component
+   * @param defaultValue the default value of the specification of the component
+   * @param min          the minimum value of the specification of the component
+   * @param max          the maximum value of the specification of the component
+   */
   @SuppressWarnings("unused")
   public Component(final String id,
                    final String type,
@@ -30,6 +46,13 @@ public class Component {
     deviceSpecs = new Specs(name, defaultValue, min, max);
   }
 
+  /**
+   * Constructor for Component class.
+   *
+   * @param id      the id of the component
+   * @param type    the type of the component
+   * @param netList a netlist object of the component
+   */
   public Component(final String id,
                    final String type,
                    final HashMap<String, String> netList
@@ -39,6 +62,17 @@ public class Component {
     this.netList = netList;
   }
 
+  /**
+   * Constructor for Component class.
+   *
+   * @param id           the id of the component
+   * @param type         the type of the component
+   * @param netList      a netlist object of the component
+   * @param name         the name of the specification of the component
+   * @param defaultValue the default value of the specification of the component
+   * @param min          the minimum value of the specification of the component
+   * @param max          the maximum value of the specification of the component
+   */
   @SuppressWarnings("unused")
   public Component(final String id,
                    final String type,
@@ -54,26 +88,55 @@ public class Component {
     deviceSpecs = new Specs(name, defaultValue, min, max);
   }
 
+  /**
+   * Getter for the id of the component.
+   *
+   * @return the id of the component
+   */
   public String getId() {
     return id;
   }
 
+  /**
+   * Getter for the type of the component.
+   *
+   * @return the type of the component
+   */
   public String getType() {
     return type;
   }
 
+  /**
+   * Getter for the netlist of the component.
+   *
+   * @return the netlist of the component
+   */
   public HashMap<String, String> getNetList() {
     return netList;
   }
 
+  /**
+   * Append a new netlist entry to the netlist of the component.
+   */
   public void addNetList(final String netName, final String netValue) {
     netList.put(netName, netValue);
   }
 
+  /**
+   * Setter for the device specification of the component.
+   *
+   * @param deviceSpecs the device specification of the component
+   */
   public void setDeviceSpecs(final Specs deviceSpecs) {
     this.deviceSpecs = deviceSpecs;
   }
 
+  /**
+   * Override the toString method of the Object class.
+   *
+   * @return a string representation of the component
+   */
+  @Override
   public String toString() {
     return "{" +
             "id=\"" + getId() + "\"" +

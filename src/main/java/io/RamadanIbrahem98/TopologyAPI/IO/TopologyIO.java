@@ -11,6 +11,12 @@ import java.util.Map;
 
 public class TopologyIO {
 
+  /**
+   * A method to read convert a json object to a topology object.
+   *
+   * @param json the json object to be converted
+   * @return the topology object
+   */
   @SuppressWarnings("unchecked")
   public static Topology getTopologyByJson(Map<?, ?> json) {
     Topology topology;

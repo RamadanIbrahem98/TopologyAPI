@@ -14,6 +14,13 @@ import java.util.Map;
 
 public class JsonIO {
 
+  /**
+   * Reads a JSON file from disk from a default location and returns a Map object.
+   *
+   * @param fileName the name of the file to read from disk
+   * @return a Map object representing the JSON file
+   * @throws IOException if there was an error reading from disk
+   */
   public static Map<?, ?> readJson(String fileName) throws IOException {
     Map<?, ?> map;
     try {
@@ -29,6 +36,13 @@ public class JsonIO {
     return map;
   }
 
+  /**
+   * Reads a JSON file from disk to memory and returns a map object.
+   *
+   * @param filePath the path to the file to read from disk
+   * @param fileName the name of the file to read from disk
+   * @throws IOException if there was an error reading from disk
+   */
   public static Map<?, ?> readJson(String filePath, String fileName) throws IOException {
     Map<?, ?> map;
     try {
@@ -44,6 +58,13 @@ public class JsonIO {
     return map;
   }
 
+  /**
+   * Writes a JSON file to disk from a generic object.
+   *
+   * @param fileName the name of the file to write to disk
+   * @param o        the object to write to disk
+   * @throws IOException if there was an error writing to disk
+   */
   public static void writeJson(String fileName, Object o) throws IOException {
     JsonObject convertedObject = new Gson().fromJson(o.toString(), JsonObject.class);
     try {

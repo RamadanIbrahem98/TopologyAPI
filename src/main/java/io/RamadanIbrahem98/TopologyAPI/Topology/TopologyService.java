@@ -59,6 +59,13 @@ public class TopologyService {
     topologyList.add(topology2);
   }
 
+  /**
+   * Get all topologies.
+   * <p>
+   * Query about all the topologies stored in memory.
+   *
+   * @return Topology list from memory.
+   */
   public ArrayList<Map<?, ?>> getTopologies() {
     ArrayList<Map<?, ?>> topologies = new ArrayList<>();
     Type type = new TypeToken<Map<?, ?>>() {
@@ -70,6 +77,15 @@ public class TopologyService {
     return topologies;
   }
 
+  /**
+   * Get topology by id.
+   * <p>
+   * Query about a specific topology by id.
+   *
+   * @param topologyID Topology id
+   * @return A list of all the components in the topology
+   * @throws TopologyNotFoundException if topology id is not found in memory
+   */
   public ArrayList<Component> queryDevices(String topologyID) {
     ArrayList<Component> devices = new ArrayList<>();
     for (Topology topology : topologyList) {
@@ -80,6 +96,13 @@ public class TopologyService {
     return devices;
   }
 
+  /**
+   * Delete a topology from memory by id.
+   *
+   * @param topologyID Topology id
+   * @return true if topology is deleted, or else throws TopologyNotFoundException
+   * @throws TopologyNotFoundException if topology id is not found in memory
+   */
   public boolean deleteTopology(String topologyID) throws TopologyNotFoundException {
     for (Topology topology : topologyList) {
       if (topology.getId().equals(topologyID)) {
@@ -90,6 +113,14 @@ public class TopologyService {
     throw new TopologyNotFoundException("No topology with id = " + topologyID);
   }
 
+  /**
+   * Find a topology by id.
+   * <p>
+   * Iterate over the topology list currently in memory and find a topology by id.
+   *
+   * @param topologyID Topology id
+   * @return the found topology object or null if not found
+   */
   private Topology getTopologyByIdOrNull(String topologyID) {
     for (Topology topology : topologyList) {
       if (topology.getId().equals(topologyID)) {
@@ -99,6 +130,15 @@ public class TopologyService {
     return null;
   }
 
+  /**
+   * Write a topology to file.
+   * <p>
+   * Save a topology from memory to a file on disk.
+   *
+   * @param topologyID Topology id
+   * @throws TopologyNotFoundException if topology id is not found in memory
+   * @throws InternalServerError       if there was an error during writing to file
+   */
   public void writeJson(String topologyID) throws TopologyNotFoundException, InternalServerError {
     Topology topology = getTopologyByIdOrNull(topologyID);
 
@@ -113,6 +153,16 @@ public class TopologyService {
     }
   }
 
+  /**
+   * Read a topology from file.
+   * <p>
+   * Read a topology from a file on disk to memory.
+   *
+   * @param fileName Topology file name
+   * @return Topology object
+   * @throws BadRequestException if the topology was already in memory
+   * @throws InternalServerError if there was an error during reading from file
+   */
   public Map<?, ?> readJson(String fileName) throws BadRequestException, InternalServerError {
     Map<?, ?> map;
     try {
@@ -134,6 +184,14 @@ public class TopologyService {
     return map;
   }
 
+  /**
+   * Query devices that are connected to a specific netlist node.
+   *
+   * @param topologyID  Topology id
+   * @param netListNode Netlist node
+   * @return A list of all the components connected to that netlist node
+   * @throws TopologyNotFoundException if topology id is not found in memory
+   */
   public ArrayList<Map<?, ?>> queryDevicesWithNetListNode(String topologyID, String netListNode) throws TopologyNotFoundException {
     ArrayList<Map<?, ?>> devices = new ArrayList<>();
     boolean foundTopology = false;
