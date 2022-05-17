@@ -16,7 +16,7 @@ class TopologyIOTest {
 
   static Map<Object, Object> underTest;
   static Topology topology;
-
+  private final TopologyIO topologyIO = new TopologyIO();
 
   @BeforeAll
   static void beforeAll() {
@@ -57,16 +57,16 @@ class TopologyIOTest {
 
   @Test
   void getTopologyByJsonReturnsATopology() {
-    assertThat(TopologyIO.getTopologyByJson(underTest)).isInstanceOf(Topology.class);
+    assertThat(topologyIO.getTopologyByJson(underTest)).isInstanceOf(Topology.class);
   }
 
   @Test
   void getTopologyByJson() {
-    assertThat(TopologyIO.getTopologyByJson(underTest)).isEqualTo(topology);
+    assertThat(topologyIO.getTopologyByJson(underTest)).isEqualTo(topology);
   }
 
   @Test
   void getTopologyByJsonComponentClassShouldMatch() {
-    assertThat(TopologyIO.getTopologyByJson(underTest).getComponents().get(0)).isInstanceOf(Resistor.class);
+    assertThat(topologyIO.getTopologyByJson(underTest).getComponents().get(0)).isInstanceOf(Resistor.class);
   }
 }

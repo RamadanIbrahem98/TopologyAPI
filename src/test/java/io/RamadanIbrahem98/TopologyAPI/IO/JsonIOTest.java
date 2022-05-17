@@ -1,5 +1,6 @@
 package io.RamadanIbrahem98.TopologyAPI.IO;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -10,9 +11,16 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
 class JsonIOTest {
 
+  JsonIO jsonIO;
+
+  @BeforeEach
+  void Setup() {
+    jsonIO = new JsonIO();
+  }
+
   @Test
   void readNotFoundJsonShouldThrow() {
-    Throwable throwable = catchThrowable(() -> JsonIO.readJson("notFound.json"));
+    Throwable throwable = catchThrowable(() -> jsonIO.readJson("notFound.json"));
     assertThat(throwable)
             .isInstanceOf(NoSuchFileException.class)
             .hasMessageContaining("No such file");
@@ -20,7 +28,7 @@ class JsonIOTest {
 
   @Test
   void writeJson() {
-    Throwable throwable = catchThrowable(() -> JsonIO.writeJson("ioexception*/.json", "{\"test field\":\"test value\"}"));
+    Throwable throwable = catchThrowable(() -> jsonIO.writeJson("ioexception*/.json", "{\"test field\":\"test value\"}"));
 
     assertThat(throwable)
             .isInstanceOf(IOException.class)
